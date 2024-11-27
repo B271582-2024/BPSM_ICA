@@ -51,6 +51,13 @@ else:
 
 #Step 4: Do clustalo and obtain level of conservation (plot)
 
+subprocess.call("clustalo -i \"sequence.fasta\" -o \"clustalo_aligned.aln\" --force --threads=10 ", shell = True)
+
+subprocess.call("plotcon -sequences clustalo_aligned.aln -graph ps -graph x11", shell = True)
+
+subprocess.call("plotcon -sequences aligned_sequences.aln -graph png -gtitle Conservation_Plot "
+                "-gdirectory . -goutfile plot.png", shell = True)
+
 
 #Step 5: Do BLAST to scan protein sequence with motifs (PROSITE databas)
 
