@@ -58,7 +58,7 @@ subprocess.call("plotcon -sequences clustalo_aligned.aln -graph png -gtitle Cons
 
 #Step 5: Do BLAST to scan protein sequence with motifs (PROSITE databas)
 
-subprocess.call("patmatmotifs -sequence sequence.fasta -outfile motif_result.txt ", shell = True)
+subprocess.call("patmatmotifs -sequence sequence.fasta -outfile motif_result.txt -full ", shell = True)
 
 with open("motif_result.txt") as file:
       motif = file.read()
