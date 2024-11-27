@@ -13,7 +13,7 @@ query = protein + " [PROT] AND " + taxonomy + " [ORGANISM]"
 #print(query)
 
 #Step 2: Obtain relevant protein sequence data
-#subprocess.call(f"esearch -db nucleotide -query \"{query}\" | "
+#subprocess.call(f"esearch -db protein -query \"{query}\" | "
 #                f"efetch -format fasta > sequence.fasta", shell=True)
 
 #sequences = subprocess.run(["esearch", "-db", "nucleotide", "-query", protein],
