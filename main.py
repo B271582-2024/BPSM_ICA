@@ -13,11 +13,8 @@ query = protein + " [PROT] AND " + taxonomy + " [ORGANISM]"
 #print(query)
 
 #Step 2: Obtain relevant protein sequence data
-#subprocess.call(f"esearch -db protein -query \"{query}\" | "
-#                f"efetch -format fasta > sequence.fasta", shell=True)
-
-#sequences = subprocess.run(["esearch", "-db", "nucleotide", "-query", protein],
-#                           capture_output=True, shell=True)
+subprocess.call(f"esearch -db protein -query \"{query}\" | "
+                f"efetch -format fasta > sequence.fasta", shell=True)
 
 with open("sequence.fasta") as file:
       sequence = file.read()
@@ -48,20 +45,25 @@ if number_of_sequences > 1000:
 else:
       print("The number of sequences is within the acceptable range.")
 
+#Use Pullseq to extract and filter needed seqeunce
 
-#Step 4: Do clustalo and obtain level of conservation (plot)
+#Step 4: Do clustalo and obtain level of conservation plot
 
-subprocess.call("clustalo -i \"sequence.fasta\" -o \"clustalo_aligned.aln\" --force --threads=10 ", shell = True)
+subprocess.call("clustalo -i \"sequence.fasta\" -o \"clustalo_aligned.aln\" --force --threads=5 ", shell = True)
 
-subprocess.call("plotcon -sequences clustalo_aligned.aln -graph ps -graph x11", shell = True)
+subprocess.call("plotcon -sequences clustalo_aligned.aln -graph x11", shell = True)
 
-subprocess.call("plotcon -sequences aligned_sequences.aln -graph png -gtitle Conservation_Plot "
-                "-gdirectory . -goutfile plot.png", shell = True)
-
+subprocess.call("plotcon -sequences clustalo_aligned.aln -graph png -gtitle Conservation_Plot "
+                "-gdirectory . -goutfile conservation_plot.png", shell = True)
 
 #Step 5: Do BLAST to scan protein sequence with motifs (PROSITE databas)
 
+subprocess.call("patmatmotifs -sequence sequence.fasta -outfile motif_result.txt ", shell = True)
 
-#glucose-6-phosphatase in birds (Aves)
-#Remember to include error trap
+with open("motif_result.txt") as file:
+      motif = file.read()
+
+print(motif)
+
+
 
